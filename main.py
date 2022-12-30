@@ -6,7 +6,7 @@ def bitlink_checker(input_url):
     if input_url[:7] == 'bit.ly/':
         return True
 
-def count_clicks(token, url):
+def url_converter(token, url):
     headers = {
         "Authorization":f"Bearer {token}",
     }
@@ -30,7 +30,7 @@ def main():
     token = input()
     url = input()
     try:
-        return count_clicks(token, url)
+        return url_converter(token, url)
     except KeyError:
         print('Not vailid url, excample: https://google.com, or invailid autherization token!')
 
