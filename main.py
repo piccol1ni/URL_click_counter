@@ -1,5 +1,9 @@
 import requests
+import os
+from dotenv import load_dotenv
 from urllib.parse import urlparse
+
+
 
 
 def bitlink_checker(input_url):
@@ -27,7 +31,7 @@ def url_converter(token, url):
 
 
 def main():
-    token = input()
+    token = os.getenv("TOKEN")
     url = input()
     try:
         return url_converter(token, url)
@@ -36,4 +40,5 @@ def main():
 
 
 if __name__=='__main__':
+    load_dotenv()
     print(main())
