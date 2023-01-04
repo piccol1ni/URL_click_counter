@@ -4,8 +4,8 @@ from dotenv import load_dotenv
 from urllib.parse import urlparse
 
 
-def bitlink_checker(url: str):
-    response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{url}/clicks/summary', headers=headers)
+def bitlink_checker(bitlink_url: str):
+    response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{bitlink_url}/clicks/summary', headers=headers)
     try:
         response.raise_for_status()
         return True
@@ -13,9 +13,9 @@ def bitlink_checker(url: str):
         pass
 
 
-def shorten_link(url: str):
+def shorten_link(bitlink_url: str):
     json_data = {
-        "long_url":url,
+        "long_url":bitlink_url,
     }
     response_get_bitlink = requests.post('https://api-ssl.bitly.com/v4/bitlinks', headers=headers, json=json_data)
     try:
@@ -28,8 +28,8 @@ def shorten_link(url: str):
     return bitlink
 
 
-def count_clicks(url: str):
-    response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{url}/clicks/summary', headers=headers)
+def count_clicks(bitlink_url: str):
+    response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{bitlink_url}/clicks/summary', headers=headers)
     print(f'Total clicks : {response.json()["total_clicks"]}')
     return f'Total clicks : {response.json()["total_clicks"]}'
 
@@ -40,8 +40,8 @@ if __name__=='__main__':
     headers = {
         "Authorization":f"Bearer {token}",
     }
-    url = input()
-    if bitlink_checker(url):
-        count_clicks(url)
+    bitlink_url = input()
+    if bitlink_checker(bitlink_url):
+        count_clicks(bitlink_url)
     else:
-        shorten_link(url)
+        shorten_link(bitlink_url)
