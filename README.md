@@ -34,7 +34,13 @@ git clone https://github.com/piccol1ni/URL_click_counter
 После того как проект скачлася к вам на компьютер, пропишите в консоли команду
 ```
 pip install -r requirements.txt
+
+Затем вы должны создать файла `.env`
+И ввести в нем ваш токен с сайта `https://app.bitly.com/settings/api/`, строчкой :
 ```
+TOKEN=Ваш токен
+```
+
 Затем команду:
 ```
 python3 main.py
