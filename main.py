@@ -1,5 +1,6 @@
 import requests
 import os
+
 from dotenv import load_dotenv
 from urllib.parse import urlparse
 
@@ -18,13 +19,11 @@ def shorten_link(url_for_request: str):
     response = requests.post('https://api-ssl.bitly.com/v4/bitlinks', headers=headers, json=long_url)
     response.raise_for_status()
     bitlink = response.json()["id"]
-    print(bitlink)
     return bitlink
 
 
 def count_clicks(url_for_request: str):
     response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{url_for_request}/clicks/summary', headers=headers)
-    print(f'Total clicks : {response.json()["total_clicks"]}')
     return f'Total clicks : {response.json()["total_clicks"]}'
 
 
@@ -37,9 +36,9 @@ if __name__=='__main__':
     url_for_request = input()
     try:
         if bitlink_checker(url_for_request):
-            count_clicks(url_for_request)
+            print(count_clicks(url_for_request))
     except requests.exceptions.HTTPError:
         try:
-            shorten_link(url_for_request)
+            print(shorten_link(url_for_request))
         except requests.exceptions.HTTPError as ex:
             print(ex)           
