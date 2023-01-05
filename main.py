@@ -6,6 +6,10 @@ from urllib.parse import urlparse
 
 
 def bitlink_checker(url_for_request: str):
+    token = os.getenv("TOKEN")
+    headers = {
+        "Authorization":f"Bearer {token}",
+    }
     response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{url_for_request}/clicks/summary', headers=headers)
     response.raise_for_status()
     return True
@@ -13,6 +17,7 @@ def bitlink_checker(url_for_request: str):
 
 
 def shorten_link(url_for_request: str):
+    token = os.getenv("TOKEN")
     long_url = {
         "long_url":url_for_request,
     }
@@ -23,16 +28,18 @@ def shorten_link(url_for_request: str):
 
 
 def count_clicks(url_for_request: str):
+    headers = {
+        "Authorization":f"Bearer {token}",
+    }
     response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{url_for_request}/clicks/summary', headers=headers)
     return f'Total clicks : {response.json()["total_clicks"]}'
 
 
+def main():
+
+
 if __name__=='__main__':
     load_dotenv()
-    token = os.getenv("TOKEN")
-    headers = {
-        "Authorization":f"Bearer {token}",
-    }
     url_for_request = input()
     try:
         if bitlink_checker(url_for_request):
