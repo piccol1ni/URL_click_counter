@@ -35,6 +35,7 @@ def count_clicks(url_for_request: str):
         "Authorization":f"Bearer {token}",
     }
     response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{url_for_request}/clicks/summary', headers=headers)
+    response.raise_for_status()
     return response.json()["total_clicks"]
 
 
