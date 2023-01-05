@@ -8,7 +8,7 @@ from urllib.parse import urlparse
 def is_bitlink(url_for_request: str):
     token = os.environ["BITLY_TOKEN"]
     headers = {
-        "Authorization":f"Bearer {token}",
+        "Authorization": f"Bearer {token}",
     }
     response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{url_for_request}', headers=headers)
     return response.ok
@@ -16,10 +16,10 @@ def is_bitlink(url_for_request: str):
 def shorten_link(url_for_request: str):
     token = os.getenv("BITLY_TOKEN")
     headers = {
-        "Authorization":f"Bearer {token}",
+        "Authorization": f"Bearer {token}",
     }
     long_url = {
-        "long_url":url_for_request,
+        "long_url": url_for_request,
     }
     response = requests.post('https://api-ssl.bitly.com/v4/bitlinks', headers=headers, json=long_url)
     response.raise_for_status()
@@ -30,7 +30,7 @@ def shorten_link(url_for_request: str):
 def count_clicks(url_for_request: str):
     token = os.getenv("BITLY_TOKEN")
     headers = {
-        "Authorization":f"Bearer {token}",
+        "Authorization": f"Bearer {token}",
     }
     response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{url_for_request}/clicks/summary', headers=headers)
     response.raise_for_status()
