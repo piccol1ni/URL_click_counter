@@ -11,9 +11,7 @@ def is_bitlink(url_for_request: str):
         "Authorization":f"Bearer {token}",
     }
     response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{url_for_request}', headers=headers)
-    response.raise_for_status()
-    return True
-
+    return response.ok
 
 def shorten_link(url_for_request: str):
     token = os.getenv("BITLY_TOKEN")
@@ -42,10 +40,9 @@ def count_clicks(url_for_request: str):
 if __name__=='__main__':
     load_dotenv()
     url_for_request = input()
-    try:
-        if is_bitlink(url_for_request):
-            print(f'Total clicks: {count_clicks(url_for_request)}')
-    except requests.exceptions.HTTPError:
+    if is_bitlink(url_for_request) is True:
+        print(f'Total clicks: {count_clicks(url_for_request)}')
+    else:
         try:
             print(shorten_link(url_for_request))
         except requests.exceptions.HTTPError as ex:
