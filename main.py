@@ -10,7 +10,7 @@ def is_bitlink(url_for_request: str):
     headers = {
         "Authorization":f"Bearer {token}",
     }
-    response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{url_for_request}/clicks/summary', headers=headers)
+    response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{url_for_request}', headers=headers)
     response.raise_for_status()
     return True
 
