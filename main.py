@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from urllib.parse import urlparse
 
 
-def bitlink_checker(url_for_request: str):
+def is_bitlink(url_for_request: str):
     token = os.environ["BITLY_TOKEN"]
     headers = {
         "Authorization":f"Bearer {token}",
@@ -43,7 +43,7 @@ if __name__=='__main__':
     load_dotenv()
     url_for_request = input()
     try:
-        if bitlink_checker(url_for_request):
+        if is_bitlink(url_for_request):
             print(f'Total clicks: {count_clicks(url_for_request)}')
     except requests.exceptions.HTTPError:
         try:
