@@ -6,7 +6,7 @@ from urllib.parse import urlparse
 
 
 def bitlink_checker(url_for_request: str):
-    token = os.getenv("TOKEN")
+    token = os.environ["BITLY_TOKEN"]
     headers = {
         "Authorization":f"Bearer {token}",
     }
@@ -16,7 +16,7 @@ def bitlink_checker(url_for_request: str):
 
 
 def shorten_link(url_for_request: str):
-    token = os.getenv("TOKEN")
+    token = os.getenv("BITLY_TOKEN")
     headers = {
         "Authorization":f"Bearer {token}",
     }
@@ -30,7 +30,7 @@ def shorten_link(url_for_request: str):
 
 
 def count_clicks(url_for_request: str):
-    token = os.getenv("TOKEN")
+    token = os.getenv("BITLY_TOKEN")
     headers = {
         "Authorization":f"Bearer {token}",
     }

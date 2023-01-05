@@ -38,7 +38,7 @@ pip install -r requirements.txt
 Затем вы должны создать файла `.env`
 И ввести в нем ваш токен с сайта `https://app.bitly.com/settings/api/`, строчкой :
 ```
-TOKEN=Ваш токен
+BITLY_TOKEN=Ваш токен
 ```
 
 Затем команду:
