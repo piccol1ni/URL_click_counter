@@ -15,9 +15,11 @@ def bitlink_checker(url_for_request: str):
     return True
 
 
-
 def shorten_link(url_for_request: str):
     token = os.getenv("TOKEN")
+    headers = {
+        "Authorization":f"Bearer {token}",
+    }
     long_url = {
         "long_url":url_for_request,
     }
@@ -28,14 +30,12 @@ def shorten_link(url_for_request: str):
 
 
 def count_clicks(url_for_request: str):
+    token = os.getenv("TOKEN")
     headers = {
         "Authorization":f"Bearer {token}",
     }
     response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{url_for_request}/clicks/summary', headers=headers)
-    return f'Total clicks : {response.json()["total_clicks"]}'
-
-
-def main():
+    return response.json()["total_clicks"]
 
 
 if __name__=='__main__':
@@ -43,7 +43,7 @@ if __name__=='__main__':
     url_for_request = input()
     try:
         if bitlink_checker(url_for_request):
-            print(count_clicks(url_for_request))
+            print(f'Total clicks: {count_clicks(url_for_request)}')
     except requests.exceptions.HTTPError:
         try:
             print(shorten_link(url_for_request))
