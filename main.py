@@ -41,5 +41,5 @@ if __name__=='__main__':
     except requests.exceptions.HTTPError:
         try:
             shorten_link(url_for_request)
-        except requests.exceptions.HTTPError:
-            print('THIS IS FAIL LINK BRO, try something like https://google.com')           
+        except requests.exceptions.HTTPError as ex:
+            print(ex)           
