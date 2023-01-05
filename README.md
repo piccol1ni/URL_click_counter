@@ -35,7 +35,7 @@ git clone https://github.com/piccol1ni/URL_click_counter
 ```
 pip install -r requirements.txt
 ```
-Затем вы должны создать файла `.env`
+Затем вы должны создать файл `.env`
 И ввести в нем ваш токен с сайта `https://app.bitly.com/settings/api/`, строчкой :
 ```
 BITLY_TOKEN=Ваш токен
@@ -45,7 +45,7 @@ BITLY_TOKEN=Ваш токен
 ```
 python3 main.py
 ```
-Введите свой токен с сайта `https://app.bitly.com/settings/api/`, предварительно зарегестрировашаись на нём!
+
 Введите ссылку которая вам нужна :
 1) `bit.ly/` для показа кол-ва кликов по ней. 
 2) Любую другую ссылку для её сокращения.
