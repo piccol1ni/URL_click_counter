@@ -1,3 +1,4 @@
+import argparse
 import requests
 import os
 
@@ -36,7 +37,10 @@ def count_clicks(url_for_request: str, token: str):
 
 if __name__=='__main__':
     load_dotenv()
-    url_for_request = input()
+    parser = argparse.ArgumentParser(description='Make shorten URLs using bit.ly or show count of clocks if it is bit.ly URL')
+    parser.add_argument('link', help='Your url or bit.ly url')
+    args = parser.parse_args()
+    url_for_request = args.link
     token = os.getenv("BITLY_TOKEN")
     try:
         if is_bitlink(url_for_request, token):
