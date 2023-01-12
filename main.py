@@ -2,15 +2,19 @@ import argparse
 import requests
 import os
 
-from dotenv import load_dotenv
 from urllib.parse import urlparse
+from dotenv import load_dotenv
 
 
 def is_bitlink(url_for_request: str, token: str):
     headers = {
         "Authorization": f"Bearer {token}",
     }
-    response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{url_for_request}', headers=headers)
+    construct_url = urlparse(f'{url_for_request}')
+    if construct_url.netloc:
+        response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{construct_url.netloc}{construct_url.path}', headers=headers)
+    else :
+        response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{construct_url.path}', headers=headers)
     return response.ok
 
 def shorten_link(url_for_request: str, token: str):
@@ -25,12 +29,12 @@ def shorten_link(url_for_request: str, token: str):
     bitlink = response.json()["id"]
     return bitlink
 
-
 def count_clicks(url_for_request: str, token: str):
     headers = {
         "Authorization": f"Bearer {token}",
     }
-    response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{url_for_request}/clicks/summary', headers=headers)
+    construct_url = urlparse(f'{url_for_request}')
+    response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{construct_url.netloc}{construct_url.path}/clicks/summary', headers=headers)
     response.raise_for_status()
     return response.json()["total_clicks"]
 
