@@ -6,28 +6,23 @@ from urllib.parse import urlparse
 from dotenv import load_dotenv
 
 
-def is_bitlink(url_for_request: str, token: str):
+def is_bitlink(url_for_user: str, token: str):
     headers = {
         "Authorization": f"Bearer {token}",
     }
-    construct_url = urlparse(f'{url_for_request}')
+    parsed_url = urlparse(url_for_user)
 
-    if construct_url.netloc:
-        response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{construct_url.netloc}\
-                                {construct_url.path}',
-                                headers=headers)
-    else :
-        response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{construct_url.path}',
-         headers=headers)
+    response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{parsed_url.netloc}{parsed_url.path}',
+                            headers=headers)
     return response.ok
 
 
-def shorten_link(url_for_request: str, token: str):
+def shorten_link(url_for_user: str, token: str):
     headers = {
         "Authorization": f"Bearer {token}",
     }
     long_url = {
-        "long_url": url_for_request,
+        "long_url": url_for_user,
     }
     response = requests.post('https://api-ssl.bitly.com/v4/bitlinks',
                             headers=headers, json=long_url)
@@ -36,13 +31,12 @@ def shorten_link(url_for_request: str, token: str):
     return bitlink
 
 
-def count_clicks(url_for_request: str, token: str):
+def count_clicks(url_for_user: str, token: str):
     headers = {
         "Authorization": f"Bearer {token}",
     }
-    construct_url = urlparse(f'{url_for_request}')
-    response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{construct_url.netloc}\
-                            {construct_url.path}/clicks/summary',
+    parsed_url = urlparse(url_for_user)
+    response = requests.get(f'https://api-ssl.bitly.com/v4/bitlinks/{parsed_url.netloc}{parsed_url.path}/clicks/summary',
                             headers=headers)
     response.raise_for_status()
     return response.json()["total_clicks"]
